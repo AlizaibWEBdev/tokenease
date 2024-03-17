@@ -1,0 +1,32 @@
+{
+  "name": "tokenease",
+  "version": "1.0.0",
+  "description": "A library for handling JWT authentication in Express.js applications",
+  "main": "index.js",
+  "keywords": [
+    "express",
+    "jwt",
+    "json web token",
+    "authentication",
+    "authorization",
+    "security",
+    "middleware",
+    "token",
+    "refresh token",
+    "access control",
+    "web development",
+    "backend",
+    "server",
+    "framework",
+    "authentication middleware",
+    "express middleware",
+    "user authentication",
+    "user authorization",
+    "web security"
+  ],
+  "author": "Alizaib",
+  "license": "MIT",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  }
+}
