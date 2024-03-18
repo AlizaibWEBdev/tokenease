@@ -23,6 +23,35 @@ const generateToken = (payload, secretKey, expiresIn = '1h') => {
     return jwt.sign(payload, secretKey, { expiresIn });
 };
 
+// Function to generate JWT token with encrypted payload
+const generateEncryptionToken = (payload, secretKey, encryptionKey, expiresIn = '1h') => {
+    // Encrypt the payload
+    const cipher = crypto.createCipheriv('aes-256-cbc', encryptionKey, Buffer.alloc(16, 0));
+    let encryptedPayload = cipher.update(JSON.stringify(payload), 'utf8', 'base64');
+    encryptedPayload += cipher.final('base64');
+
+    // Generate JWT token with encrypted payload
+    const token = jwt.sign({ payload: encryptedPayload }, secretKey, { expiresIn });
+    return token;
+};
+
+// Function to verify JWT token and decrypt payload
+const verifyEncryptionToken = (token, secretKey, encryptionKey) => {
+    try {
+        const decodedToken = jwt.verify(token, secretKey);
+        if (decodedToken && decodedToken.payload) {
+            // Decrypt the payload
+            const decipher = crypto.createDecipheriv('aes-256-cbc', encryptionKey, Buffer.alloc(16, 0));
+            let decryptedPayload = decipher.update(decodedToken.payload, 'base64', 'utf8');
+            decryptedPayload += decipher.final('utf8');
+            return JSON.parse(decryptedPayload);
+        } else {
+            throw new Error('Invalid token format');
+        }
+    } catch (error) {
+        throw new Error('Invalid token or decryption failed');
+    }
+};
 
 // Function to generate a new access token using a refresh token
 const refreshAccessToken = (refreshToken, secretKey, extractUser) => {
@@ -113,6 +142,8 @@ module.exports = {
     blacklistToken,
     revokeUserTokens,
     revokeTokenByIdentifier,
-    handleTokenExpiry
+    handleTokenExpiry,
+     generateEncryptionToken,
+    verifyEncryptionToken
 };
 
