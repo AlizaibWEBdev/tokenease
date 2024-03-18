@@ -132,7 +132,9 @@ The `generateEncryptionToken` function generates a JWT token with an encrypted p
 ### Syntax
 
 
-```generateEncryptionToken(payload, secretKey, encryptionKey, [expiresIn])```
+```
+generateEncryptionToken(payload, secretKey, encryptionKey, [expiresIn])
+```
 
 
 *   **payload:** The payload object to be encrypted and included in the JWT token.
@@ -141,7 +143,9 @@ The `generateEncryptionToken` function generates a JWT token with an encrypted p
 *   **expiresIn:** (optional) The expiration time for the JWT token (default: '1h')
 
 ## exemple 
-```const token = generateEncryptionToken({ userId: '123', role: 'admin' }, 'mySecretKey', 'encryptionSecret');```
+```
+const token = generateEncryptionToken({ userId: '123', role: 'admin' }, 'mySecretKey', 'encryptionSecret');
+```
 
 ## verifyEncryptionToken
 
@@ -157,7 +161,8 @@ The verifyEncryptionToken function verifies a JWT token with an encrypted payloa
 
 ## exemple 
 
-```const payload = verifyEncryptionToken(token, 'mySecretKey', 'encryptionSecret'); 
+```
+const payload = verifyEncryptionToken(token, 'mySecretKey', 'encryptionSecret'); 
 console.log(payload); // { userId: '123', role: 'admin' }
 ```
 
