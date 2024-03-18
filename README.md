@@ -1,4 +1,6 @@
 # Express JWT Library tokenease
+
+
 ===================
 
 This library provides easy-to-use functions for handling JWT (JSON Web Token) authentication in Express.js applications. It simplifies token authentication, generation, refreshing, and revocation, making it more convenient for developers to implement JWT-based authentication in their projects.
@@ -116,4 +118,51 @@ Function to handle token expiry by refreshing access tokens using refresh tokens
         console.error('Error handling token expiry:', error);
         });
 
+
+# JWT Encryption Token Functions
+
+This document describes two additional functions added to the JWT authentication library: `generateEncryptionToken` and `verifyEncryptionToken`. These functions enable developers to generate and verify JWT tokens with encrypted payloads, enhancing the security of token-based authentication in Express.js applications.
+
+## generateEncryptionToken
+
+### Description
+
+The `generateEncryptionToken` function generates a JWT token with an encrypted payload. This function encrypts the provided payload using AES-256-CBC encryption and signs the JWT token with the encrypted payload. Developers can specify the secret key, encryption key, expiration time, and payload when calling this function.
+
+### Syntax
+
+
+```generateEncryptionToken(payload, secretKey, encryptionKey, [expiresIn])```
+
+
+*   **payload:** The payload object to be encrypted and included in the JWT token.
+*   **secretKey:** The secret key used for signing the JWT token.
+*   **encryptionKey:** The encryption key used to encrypt the payload.
+*   **expiresIn:** (optional) The expiration time for the JWT token (default: '1h')
+
+## exemple 
+```const token = generateEncryptionToken({ userId: '123', role: 'admin' }, 'mySecretKey', 'encryptionSecret');```
+
+## verifyEncryptionToken
+
+The verifyEncryptionToken function verifies a JWT token with an encrypted payload and decrypts the payload. This function checks the validity of the token signature using the provided secret key and then decrypts the encrypted payload using the specified encryption key. If the token is valid and the payload decryption is successful, the function returns the decrypted payload.
+
+# sayntax 
+
+```verifyEncryptionToken(token, secretKey, encryptionKey)```
+
+* **token:** The JWT token to be verified and decrypted.
+* **secretKey:** The secret key used for verifying the JWT token signature.
+* **encryptionKey:** The encryption key used to decrypt the payload.
+
+## exemple 
+
+```const payload = verifyEncryptionToken(token, 'mySecretKey', 'encryptionSecret'); 
+console.log(payload); // { userId: '123', role: 'admin' }
+```
+
+
+
 This library is licensed under the MIT License.
+
+
